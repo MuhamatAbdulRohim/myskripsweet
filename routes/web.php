@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 Route::get('twitterUserTimeLine', 'TwitterController@twitterUserTimeLine');
 Route::post('tweet', ['as'=>'post.tweet','uses'=>'TwitterController@tweet']);
+Route::post('/search', 'TwitterController@twitterSearch');

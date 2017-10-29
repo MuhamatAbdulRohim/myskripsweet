@@ -10,7 +10,12 @@ class TwitterController extends Controller
 {
     public function twitterUserTimeLine()
     {
-        $data = Twitter::getHomeTimeline(['count' => 10, 'format' => 'array']);
+        $data = Twitter::getUserTimeline(['count' => 10, 'format' => 'array']);
+        return view('twitter.twitter', compact('data'));
+    }
+
+    public function twitterSearch(Request $request){
+        $data = Twitter::getSearch(['q' => $request->kata, 'count' => 100, 'format' => 'array']);
         return view('twitter.twitter', compact('data'));
     }
 

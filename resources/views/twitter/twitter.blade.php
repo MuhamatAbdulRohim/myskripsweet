@@ -9,40 +9,49 @@
 <div class="container">
     <h2>Laravel 5 - Twitter API</h2>
 
-    <form method="POST" action="{{ route('post.tweet') }}" enctype="multipart/form-data">
+    {{--<form method="POST" action="{{ route('post.tweet') }}" enctype="multipart/form-data">--}}
 
-        {{ csrf_field() }}
+        {{--{{ csrf_field() }}--}}
 
-        @if(count($errors))
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.
-                <br/>
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        {{--@if(count($errors))--}}
+            {{--<div class="alert alert-danger">--}}
+                {{--<strong>Whoops!</strong> There were some problems with your input.--}}
+                {{--<br/>--}}
+                {{--<ul>--}}
+                    {{--@foreach($errors->all() as $error)--}}
+                        {{--<li>{{ $error }}</li>--}}
+                    {{--@endforeach--}}
+                {{--</ul>--}}
+            {{--</div>--}}
+        {{--@endif--}}
 
+        {{--<div class="form-group">--}}
+            {{--<label>Add Tweet Text:</label>--}}
+            {{--<textarea class="form-control" name="tweet"></textarea>--}}
+        {{--</div>--}}
+        {{--<div class="form-group">--}}
+            {{--<label>Add Multiple Images:</label>--}}
+            {{--<input type="file" name="images[]" multiple class="form-control">--}}
+        {{--</div>--}}
+        {{--<div class="form-group">--}}
+            {{--<button class="btn btn-success">Add New Tweet</button>--}}
+        {{--</div>--}}
+    {{--</form>--}}
+    <form action="/search" method="POST">
+        {{csrf_field()}}
         <div class="form-group">
-            <label>Add Tweet Text:</label>
-            <textarea class="form-control" name="tweet"></textarea>
+            <input type="text" name="kata" class="form-control">
         </div>
-        <div class="form-group">
-            <label>Add Multiple Images:</label>
-            <input type="file" name="images[]" multiple class="form-control">
-        </div>
-        <div class="form-group">
-            <button class="btn btn-success">Add New Tweet</button>
-        </div>
+        <button type="submit" class="btn btn-warning">Search</button>
     </form>
-
+    <hr>
     <table class="table table-bordered">
         <thead>
         <tr>
             <th width="50px">No</th>
-            <th>Twitter Id</th>
+            <th>Lattitide</th>
+            <th>Longitude</th>
+            <th>Screen Name</th>
             <th>Message</th>
             <th>Images</th>
             <th>Favorite</th>
@@ -51,10 +60,13 @@
         </thead>
         <tbody>
         @if(!empty($data))
-            @foreach($data as $key => $value)
+            @foreach($data['statuses'] as $key => $value)
+                {{--                @if(strpos($value['user']['location'], 'Surabaya') !== false)--}}
                 <tr>
                     <td>{{ ++$key }}</td>
-                    <td>{{ $value['id'] }}</td>
+                    <td>{{ $value['id']}}</td>
+                    <td>{{ $value['user']['location']}}</td>
+                    <td>{{ $value['user']['screen_name'] }}</td>
                     <td>{{ $value['text'] }}</td>
                     <td>
                         @if(!empty($value['extended_entities']['media']))
@@ -66,6 +78,7 @@
                     <td>{{ $value['favorite_count'] }}</td>
                     <td>{{ $value['retweet_count'] }}</td>
                 </tr>
+                {{--@endif--}}
             @endforeach
         @else
             <tr>
